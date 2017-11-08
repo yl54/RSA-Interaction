@@ -1,5 +1,4 @@
 """
-
 This module provides helper functions for mathematical computations.
 
 """
@@ -27,3 +26,7 @@ def isCoPrime(val_1, val_2):
     
     # return if the gcd is equal to 1 or not.
 
+
+# Probably wise to have an object that stores previous results of 
+#   algorithm if its gonna be a big number.
+# First, do the way without storage.
