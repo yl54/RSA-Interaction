@@ -1,5 +1,6 @@
-"""
+import Algorithms
 
+"""
 This module provides helper functions for RSA message transferring.
 
 """
@@ -11,4 +12,4 @@ def pickMessage():
 def encryptMessage(m):
 
 # Function to decrypt message.
-def decryptMessage(m_encry):
+def decryptMessage(m_encrypt):
