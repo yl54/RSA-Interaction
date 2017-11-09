@@ -36,18 +36,19 @@ Setup:
 
 """
 
+# Note: Execute each step one by one.
 p, q = Setup.pickInitialPrimes()
 N = Algorithms.calcModulus(p, q)
 phi = Algorithms.calcEulersTotient(p, q)
 e = Setup.pickPublicExponent(phi)
-d = Setup.calcSecretExponent(e, phi)
+#d = Setup.calcSecretExponent(e, phi)
 
 print "p: " + str(p)
 print "q: " + str(q)
 print "N: " + str(N)
 print "phi: " + str(phi)
 print "e: " + str(e)
-print "d: " + str(d)
+#print "d: " + str(d)
 
 """
 Messaging: 
