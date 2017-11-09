@@ -28,17 +28,20 @@ def pickPublicExponent(phi):
     while(True):
         num = input("Enter your public exponent: ")
         isBtwn = (1 < num) & (num < phi)
-        isCoPrime = Algorithms.isCoPrime(e, phi)
-        if(isBtwn & is CoPrime):
+        isCoPrime = Algorithms.isCoPrime(num, phi)
+        if(isBtwn & isCoPrime):
             print str(num) + " is a valid public exponent."
             return num
         else:
             print str(num) + " is not a valid public exponent. Try again"
 
+"""
 # Function to calculate the secret exponent.
 def calcSecretExponent(e, phi):
     # compute: e * d congr 1 (mod phi)
 
-    # return result.
+    # just do Euclidean, then go backwards 
 
+    # return result.
+"""
 
