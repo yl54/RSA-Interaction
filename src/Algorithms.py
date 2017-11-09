@@ -19,14 +19,13 @@ def isPrime(val):
     found_values = {1}
 
     iter = 2
-    mult = 1
-    while iter < val:
+    while iter < (val // 2 + 1):
         if iter not in found_values:
             primes.append(iter)
-            while mult < val:
-                found_values.add(mult)
-                mult += mult
-        # move onto next number to look for
+            total = 0
+            while total <= val:
+                found_values.add(total)
+                total += iter
         iter += 1
 
     return val not in found_values
@@ -41,14 +40,19 @@ def calcEuclid(val_1, val_2):
     # identify which number is smaller.
     dividend = max(val_1, val_2)
     divisor = min(val_1, val_2)
+    print "dividend: " + str(dividend)
+    print "divisor: " + str(divisor) 
     dividends = [dividend, divisor]
     quotients = []
-    while (dividend != 0 && divisor != 0): 
+    while(dividend != 1 and divisor != 1 and \
+          dividend != 0 and divisor != 0): 
         quotient, remainder = calcDivision(dividend, divisor)
+        print "quotient: " + str(quotient)
+        print "remainder: " + str(remainder)
         dividends.append(remainder)
         quotients.append(quotient)
-        divisor = quotient
         dividend = divisor
+        divisor = remainder
     return dividends, quotients
 
 # Function to execute the extended euclidean algorithm.
@@ -60,12 +64,19 @@ def calcExtendEclid(dividends, quotients):
     sub_2 = dividends[div_length - 3]
     mult_sub_1 = quotients[quo_length - 2]
     mult_sub_2 = 1
-    int count = 0
+    count = 0
     for i in xrange(div_length - 4, 0, -1):
         div = dividends[i]
         quo = quotients[i - 1]
-        sub_1, mult_sub_1, sub_2, mult_sub_2 = substitute(sub_1, mult_sub_1, sub_2, mult_sub_2, div, quo)
-        count++
+        print "sub_1: " + str(sub_1)
+        print "mult_sub_1: " + str(mult_sub_1)
+        print "sub_2: " + str(sub_2)
+        print "mult_sub_2: " + str(mult_sub_2)
+        print "div: " + str(div)
+        print "quo: " + str(quo)       
+        sub_1, mult_sub_1, sub_2, mult_sub_2 = \
+                    substitute(sub_1, mult_sub_1, sub_2, mult_sub_2, div, quo)
+        count += 1
 
     return sub_1, mult_sub_1, sub_2, mult_sub_2
 
@@ -76,11 +87,11 @@ def substitute(sub_1, mult_sub_1, sub_2, mult_sub_2, sub_3, quo):
     return sub_3, low_mult, high_val, new_high_mult
 
 # Function to help assign lower/higher values.
-def assign(sub_1, mult_sub_1, sub_2, mult_sub_2)
-    if sub_2 > sub_1: 
+def assign(sub_1, mult_sub_1, sub_2, mult_sub_2):
+    if(sub_2 > sub_1): 
         return sub_1, mult_sub_1, sub_2, mult_sub_2
     else:
-        return sub_2, mult_sub_2, sub_1, mult_sub_1'
+        return sub_2, mult_sub_2, sub_1, mult_sub_1
 
 # Function to execute division algorithm and get the quotient and remainder.
 def calcDivision(dividend, divisor):
