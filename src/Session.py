@@ -1,5 +1,5 @@
 import Algorithms
-import Message
+#import Message
 import Setup
 
 """
@@ -42,6 +42,12 @@ phi = Algorithms.calcEulersTotient(p, q)
 e = Setup.pickPublicExponent(phi)
 d = Setup.calcSecretExponent(e, phi)
 
+print "p: " + str(p)
+print "q: " + str(q)
+print "N: " + str(N)
+print "phi: " + str(phi)
+print "e: " + str(e)
+print "d: " + str(d)
 
 """
 Messaging: 
