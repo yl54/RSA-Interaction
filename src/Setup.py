@@ -35,13 +35,12 @@ def pickPublicExponent(phi):
         else:
             print str(num) + " is not a valid public exponent. Try again"
 
-"""
+
 # Function to calculate the secret exponent.
 def calcSecretExponent(e, phi):
-    # compute: e * d congr 1 (mod phi)
+    dividends, quotients = Algorithms.calcEuclid(e, phi)
+    sub_1, mult_sub_1, sub_2, mult_sub_2 = \
+            Algorithms.calcExtendEuclid(dividends, quotients)
+    return sub_1, mult_sub_1, sub_2, mult_sub_2
 
-    # just do Euclidean, then go backwards 
-
-    # return result.
-"""
 

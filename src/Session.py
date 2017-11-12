@@ -38,17 +38,30 @@ Setup:
 
 # Note: Execute each step one by one.
 p, q = Setup.pickInitialPrimes()
-N = Algorithms.calcModulus(p, q)
-phi = Algorithms.calcEulersTotient(p, q)
-e = Setup.pickPublicExponent(phi)
-#d = Setup.calcSecretExponent(e, phi)
-
 print "p: " + str(p)
 print "q: " + str(q)
+
+N = Algorithms.calcModulus(p, q)
 print "N: " + str(N)
+
+phi = Algorithms.calcEulersTotient(p, q)
 print "phi: " + str(phi)
+
+e = Setup.pickPublicExponent(phi)
 print "e: " + str(e)
-#print "d: " + str(d)
+
+sub_1, mult_sub_1, sub_2, mult_sub_2 = Setup.calcSecretExponent(e, phi)
+d = mult_sub_1
+if(e == sub_2):
+    d = mult_sub_2
+
+print "sub_1: " + str(sub_1)
+print "mult_sub_1: " + str(mult_sub_1)
+print "sub_2: " + str(sub_2)
+print "mult_sub_2: " + str(mult_sub_2)
+print "d: " + str(d)
+
+
 
 """
 Messaging: 
