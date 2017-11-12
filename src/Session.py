@@ -1,5 +1,5 @@
 import Algorithms
-#import Message
+import Message
 import Setup
 
 """
@@ -62,8 +62,34 @@ print "mult_sub_2: " + str(mult_sub_2)
 print "d: " + str(d)
 
 
-
 """
 Messaging: 
+- add messages to queue
+- encrypt each message as they come in
+- decrypt message if there are messages available
 
 """
+encrypted_messages = []
+while True:
+    choice = raw_input("Type 'message' to add a message, \
+                             'decrypt' to decrypt the next message, or \
+                             'exit' to stop interacting.")  
+    if(choice == "message"):
+        m = raw_input("Enter a message: ")
+        m_encrypt = Message.encryptMessage(m)
+        encrypted_messages.append(m_encrypt)
+        print "Raw message: " + m
+        print "Encrypted message: " + m_encrypt
+    else if(choice == "decrypt"):
+        if(len(encrypted_messages) == 0):
+            print "Message queue is empty."
+        else:
+            m_encrypt = encrypted_messages.pop(0)
+            m_decrypt = Message.decryptMessage(m_encrypt)
+
+            print "Encrypted message: " + m_encrypt
+            print "Decrypted message: " + m_decrypt 
+    else if(choice == "exit"):
+        break;
+    else:
+        print "Please type one of the specified options."
