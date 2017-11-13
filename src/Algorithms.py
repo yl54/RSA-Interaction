@@ -40,8 +40,8 @@ def calcEuclid(val_1, val_2):
     # identify which number is smaller.
     dividend = max(val_1, val_2)
     divisor = min(val_1, val_2)
-    #print "dividend: " + str(dividend)
-    #print "divisor: " + str(divisor) 
+    print "dividend: " + str(dividend)
+    print "divisor: " + str(divisor) 
     dividends = [dividend, divisor]
     quotients = []
     while(dividend != 1 and divisor != 1 and \
@@ -112,3 +112,46 @@ def calcDivision(dividend, divisor):
     remainder = dividend - (divisor * quotient)
     return quotient, remainder
 
+# Function to calculate mod problems with large integers.
+#   These problems are of the form: t congr a^b mod n, return t.  
+#   This particular method leverages successive squaring.
+def calcLargeMod(a, b, n):
+    # Retrieve all values of a^(2*x) mod n. While loop.
+    # Do until 2*x is greater than b.
+    current = a
+    mod_nums = {}
+    mod_nums[0] = current
+    pwr = 1
+    while 2^pwr < b:
+        current = current^2 % n
+        mod_nums.append(current)
+        mod_nums[pwr] = current
+        pwr += 1
+    
+    # Do loop to figure out which are the largest values 
+    #   of 2 that add up to b. 
+    # Do until 0 remainder. Will always get a 0 at some point.
+    # Do from largest to smallest value of 2.
+    # Can store this stuff in a dict. 
+    # For each value that corresponds to power, do a mod n 
+    #   with the multiplication. Keeps everything small.
+    pwr -= 1
+    diff = b
+    mult = 1 # not sure if this is correct
+    while pwr > -1 and diff > 0:
+        # Check if this power of 2 is less than diff
+        pwr_amt = 2^pwr
+        if pwr_amt > diff:
+            pwr -= 1
+            continue
+        # Subtract from diff.
+        diff -= pwr_amt
+        # Multiply result with the mod number associated 
+        #   that power. 
+        mult *= mod_nums[pwr]
+        # Mod the number by n.
+        mult = mult % n
+        pwr -= 1
+        
+    # Return the last modded value.
+    return mult
