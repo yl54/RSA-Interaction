@@ -13,16 +13,16 @@ def interact(p, q, N, phi, e, d):
         choice = raw_input("Type 'message' to add a message, \
                                  'decrypt' to decrypt the next message, or \
                                  'exit' to stop interacting.")  
-        if(choice == "message"):
+        if choice == "message" :
             m_encrypt = handleMessage(N, e, ref_ch_to_int)
             encrypted_messages.append(m_encrypt)
-        else if(choice == "decrypt"):
-            if(len(encrypted_messages) == 0):
+        elif choice == "decrypt":
+            if len(encrypted_messages) == 0:
                 print "Message queue is empty."
             else:
                 m_encrypt = encrypted_messages.pop(0)
                 m_decrypt = handleDecrypt(m_encrypt, N, d, ref_int_to_ch)
-        else if(choice == "exit"):
+        elif choice == "exit":
             print "Requested exit."
             break;
         else:
@@ -80,12 +80,9 @@ def convertMessageToInt(val, ref_ch_to_int):
 def convertIntToMessage(val, ref_int_to_ch):
     if val is None:
         return None
-
     str_val = str(val)
-
     # Handle case if val is odd number of digits. 
     # Q: Is the single letter case at the beginning or at the end?
-
     pieces = []
     for i in xrange(0, len(str_val), 1):
         pieces.append(ref_int_to_ch[str_val[i]])

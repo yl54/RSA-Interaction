@@ -44,8 +44,8 @@ def calcEuclid(val_1, val_2):
     print "divisor: " + str(divisor) 
     dividends = [dividend, divisor]
     quotients = []
-    while(dividend != 1 and divisor != 1 and \
-          dividend != 0 and divisor != 0): 
+    while (dividend != 1 and divisor != 1) and \
+          (dividend != 0 and divisor != 0): 
         quotient, remainder = calcDivision(dividend, divisor)
         print "------------------------"
         print "quotient: " + str(quotient)
@@ -141,7 +141,7 @@ def calcLargeMod(a, b, n):
     pwr -= 1
     diff = b
     mult = 1 # not sure if this is correct
-    while pwr > -1 and diff > 0:
+    while (pwr > -1) and (diff > 0):
         # Check if this power of 2 is less than diff
         pwr_amt = 2^pwr
         print "pwr: " + str(pwr)
