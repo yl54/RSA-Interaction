@@ -57,7 +57,23 @@ def decryptMessage(m_encrypt, N, d, ref_int_to_ch):
     # Compute m_decrypt = m_encrypt^d mod n
     
     # Convert m_decrypt to plain text.
-    
+
+# Function to convert a string into an integer.
+def convertMessageToInt(input):
+    # Check if input is valid.
+
+    # Concactenate a string that is the integer representation of input.
+
+    # Use a python lib to convert string to int.
+
+# Function to convert an integer into an string.
+def convertIntToMessage(input):
+    # Check if input is valid.
+
+    # Concactenate a string that takes each 2 digit combination.
+
+    # Return message.
+
 # Function to assign codes to each character.
 def assignChCodes():
     ref_ch_to_int = {}
