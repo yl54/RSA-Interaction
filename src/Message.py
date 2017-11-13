@@ -46,33 +46,53 @@ def handleDecrypt(m_encrypt, N, d, ref_int_to_ch):
 # Function to encrypt message.
 # Q: How to break up a big message into multiple messages?
 def encryptMessage(m, N, e, ref_ch_to_int):
-    # Convert raw message into an integer.
-    
-    # Compute m_encrypt = m^e mod n.
-    
-    # Return m_encrypt.
+    conversion = convertMessageToInt(m, ref_ch_to_int)
+    # Compute m_encrypt = conversion^e mod n.
+    m_encrypt = Algorithms.calcLargeMod(conversion, e, N)
+    print "m: " + m
+    print "conversion: " + str(conversion)
+    print "m_encrypt: " + str(m_encrypt)
+    return m_encrypt
 
 # Function to decrypt message.
 def decryptMessage(m_encrypt, N, d, ref_int_to_ch):
     # Compute m_decrypt = m_encrypt^d mod n
-    
-    # Convert m_decrypt to plain text.
+    m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
+    conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
+    print "m_encrypt: " + str(m_encrypt)
+    print "m_decrypt: " + str(m_decrypt)
+    print "conversion: " + conversion
+    return conversion
 
 # Function to convert a string into an integer.
-def convertMessageToInt(input):
-    # Check if input is valid.
-
-    # Concactenate a string that is the integer representation of input.
-
-    # Use a python lib to convert string to int.
+def convertMessageToInt(val, ref_ch_to_int):
+    if val is None:
+        return None
+    pieces = []
+    for i in xrange(0, len(val), 1):
+        pieces.append(ref_ch_to_int[val[i]])
+    print "int pieces: " + ", ".join(pieces)
+    full_val = "".join(pieces)
+    print "full_val: " + full_val
+    return int(full_val)
 
 # Function to convert an integer into an string.
-def convertIntToMessage(input):
-    # Check if input is valid.
+def convertIntToMessage(val, ref_int_to_ch):
+    if val is None:
+        return None
 
-    # Concactenate a string that takes each 2 digit combination.
+    str_val = str(val)
 
-    # Return message.
+    # Handle case if val is odd number of digits. 
+    # Q: Is the single letter case at the beginning or at the end?
+
+    pieces = []
+    for i in xrange(0, len(str_val), 1):
+        pieces.append(ref_int_to_ch[str_val[i]])
+    print "string pieces: " + ", ".join(pieces)
+    full_val = "".join(pieces)
+    print "full_val: " + full_val
+    return int(full_val)
 
 # Function to assign codes to each character.
 def assignChCodes():
