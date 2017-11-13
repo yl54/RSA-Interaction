@@ -8,6 +8,8 @@ def calcModulus(p, q):
     return p * q
 
 # Function to calculate euler's totient.
+# Note: For the purposes of this program, assume that
+#         p and q are prime numbers.
 def calcEulersTotient(p, q):
     return (p - 1) * (q - 1)
 
