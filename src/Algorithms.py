@@ -124,15 +124,18 @@ def calcLargeMod(a, b, n):
     mod_nums = {}
     mod_nums[0] = current
     pwr = 1
-    while 2^pwr < b:
+    pwr_num = 2**pwr
+    while pwr_num < b:
         print "pwr: " + str(pwr)
-        print "2 pwr: " + str(2^pwr)
-        current = current^2 % n
-        mod_nums.append(current)
+        print "pwr_num: " + str(pwr_num)
+        current = current**2 % n
+        #mod_nums.append(current)
         mod_nums[pwr] = current
         print "current: " + str(current)
         pwr += 1
+        pwr_num = 2**pwr
     
+    print "----------------------------"
     # Do loop to figure out which are the largest values 
     #   of 2 that add up to b. 
     # Do until 0 remainder. Will always get a 0 at some point.
@@ -145,7 +148,7 @@ def calcLargeMod(a, b, n):
     mult = 1 # not sure if this is correct
     while (pwr > -1) and (diff > 0):
         # Check if this power of 2 is less than diff
-        pwr_amt = 2^pwr
+        pwr_amt = 2**pwr
         print "pwr: " + str(pwr)
         print "pwr_amt: " + str(pwr_amt)
         print "diff: " + str(diff)
@@ -162,6 +165,7 @@ def calcLargeMod(a, b, n):
         mult *= mod_nums[pwr]
         # Mod the number by n.
         mult %= n
+        print "mod_nums[pwr]: " + str(mod_nums[pwr])
         print "(mult * mod_nums[pwr]) mod n: " + str(mult)
         pwr -= 1
         
