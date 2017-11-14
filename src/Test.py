@@ -41,12 +41,29 @@ d = mult_sub_1
 if(e == sub_2):
     d = mult_sub_2
 
+"""
 encry_result = Message.encryptMessage("i love math", N, e, ref_ch_to_int)
 print "encry_result: " + str(encry_result)
 
 # Test the decryption of a message.
 decry_result = Message.decryptMessage(encry_result, N, d, ref_int_to_ch)
 print "decry_result: " + decry_result
+
+"""
+
+encry_result_A = Message.encryptMessage("the ps p", N, e, ref_ch_to_int)
+#encry_result_B = Message.encryptMessage("the ps p", N, e, ref_ch_to_int)
+
+print "encry_result_A: " + str(encry_result_A)
+#print "encry_result_B: " + str(encry_result_B)
+
+sig_A = 84069637
+sig_B = 84066637
+# Test the decryption of a message.
+decry_result_A = Message.decryptMessageSig(encry_result_A, N, d, ref_int_to_ch, sig_A, e)
+#decry_result_B = Message.decryptMessageSig(encry_result_B, N, d, ref_int_to_ch, sig_B, e)
+print "decry_result_A: " + decry_result_A
+#print "decry_result_B: " + decry_result_B
 
 #m_encrypt_A = 84069637
 #m_encrypt_B = 84066637

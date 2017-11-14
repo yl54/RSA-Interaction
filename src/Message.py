@@ -57,9 +57,10 @@ def encryptMessage(m, N, e, ref_ch_to_int):
     for i in xrange(0, len(conversion), 1):
         m_encrypt = Algorithms.calcLargeMod(conversion[i], e, N)
         m_encrypts.append(m_encrypt)
-        print "m: " + m
-        print "conversion: " + str(conversion)
+        #print "m: " + m
+        #print "conversion: " + str(conversion)
         print "m_encrypt: " + str(m_encrypt)
+        # do the signing part here.
     return m_encrypts
 
 # Function to decrypt message.
@@ -74,6 +75,26 @@ def decryptMessage(m_encrypts, N, d, ref_int_to_ch):
         print "m_encrypt: " + str(m_encrypt)
         print "m_decrypt: " + str(m_decrypt)
         print "conversion: " + conversion
+    return " ".join(conversions)
+
+# Function to decrypt message with signature.
+def decryptMessageSig(m_encrypts, N, d, ref_int_to_ch, sig, e):
+    # Compute m_decrypt = m_encrypt^d mod n
+    conversions = []
+    for i in xrange(0, len(m_encrypts), 1):
+        m_encrypt = m_encrypts[i]
+        m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
+        print "m_encrypt: " + str(m_encrypt)
+        print "m_decrypt: " + str(m_decrypt)
+        
+        conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
+        conversions.append(conversion)
+        print "conversion: " + conversion
+
+        # do the sign part here.
+        m_orig = Algorithms.calcLargeMod(sig, e, N)
+        print "m_orig: " + str(m_orig)
+        print "-----------------------"
     return " ".join(conversions)
 
 # Function to convert a string into an integer.
@@ -103,6 +124,7 @@ def convertIntToMessage(val, ref_int_to_ch):
     if val is None:
         return None
     str_val = str(val)
+    print "str_val: " + str_val
     # Handle case if val is odd number of digits. 
     # Q: Is the single letter case at the beginning or at the end?
     pieces = []
