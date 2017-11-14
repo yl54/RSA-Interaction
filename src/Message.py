@@ -14,14 +14,15 @@ def interact(p, q, N, phi, e, d):
                                  'decrypt' to decrypt the next message, or \
                                  'exit' to stop interacting.")  
         if choice == "message" :
-            m_encrypt = handleMessage(N, e, ref_ch_to_int)
-            encrypted_messages.append(m_encrypt)
+            # Need to handle split up messages.
+            m_encrypts = handleMessage(N, e, ref_ch_to_int)
+            encrypted_messages.append(m_encrypts)
         elif choice == "decrypt":
             if len(encrypted_messages) == 0:
                 print "Message queue is empty."
             else:
-                m_encrypt = encrypted_messages.pop(0)
-                m_decrypt = handleDecrypt(m_encrypt, N, d, ref_int_to_ch)
+                m_encrypts = encrypted_messages.pop(0)
+                m_decrypt = handleDecrypt(N, d, ref_int_to_ch, m_encrypts)
         elif choice == "exit":
             print "Requested exit."
             break;
@@ -31,50 +32,71 @@ def interact(p, q, N, phi, e, d):
 # Function to handle message choice.
 def handleMessage(N, e, ref_ch_to_int):
     m = raw_input("Enter a message (a-z characters): ")
-    m_encrypt = Message.encryptMessage(m, N, e, ref_ch_to_int)
-    print "Raw message: " + m
-    print "Encrypted message: " + m_encrypt
-    return m_encrypt
+    m_encrypts = Message.encryptMessage(m, N, e, ref_ch_to_int)
+    # print "Raw message: " + m
+    # print "Encrypted message: " + str(m_encrypts)
+    return m_encrypts
 
 # Function to handle decrypt choice.
-def handleDecrypt(m_encrypt, N, d, ref_int_to_ch):
-    m_decrypt = Message.decryptMessage(m_encrypt, N, d, ref_int_to_ch)
-    print "Encrypted message: " + m_encrypt
-    print "Decrypted message: " + m_decrypt
-    return m_decrypt
+def handleDecrypt(N, d, ref_int_to_ch, m_encrypts):
+    words = []
+    for i in xrange(0, len(m_encrypts), 1):
+        m_decrypt = Message.decryptMessage(m_encrypt, N, d, ref_int_to_ch)
+        words.append(m_decrypt)
+        print "Encrypted message: " + m_encrypt
+        print "Decrypted message: " + m_decrypt
+    end_val = " ".join(words)
+    return end_val
 
 # Function to encrypt message.
 # Q: How to break up a big message into multiple messages?
 def encryptMessage(m, N, e, ref_ch_to_int):
     conversion = convertMessageToInt(m, ref_ch_to_int)
     # Compute m_encrypt = conversion^e mod n.
-    m_encrypt = Algorithms.calcLargeMod(conversion, e, N)
-    print "m: " + m
-    print "conversion: " + str(conversion)
-    print "m_encrypt: " + str(m_encrypt)
-    return m_encrypt
+    m_encrypts = []
+    for i in xrange(0, len(conversion), 1):
+        m_encrypt = Algorithms.calcLargeMod(conversion[i], e, N)
+        m_encrypts.append(m_encrypt)
+        print "m: " + m
+        print "conversion: " + str(conversion)
+        print "m_encrypt: " + str(m_encrypt)
+    return m_encrypts
 
 # Function to decrypt message.
-def decryptMessage(m_encrypt, N, d, ref_int_to_ch):
+def decryptMessage(m_encrypts, N, d, ref_int_to_ch):
     # Compute m_decrypt = m_encrypt^d mod n
-    m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
-    conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
-    print "m_encrypt: " + str(m_encrypt)
-    print "m_decrypt: " + str(m_decrypt)
-    print "conversion: " + conversion
-    return conversion
+    conversions = []
+    for i in xrange(0, len(m_encrypts), 1):
+        m_encrypt = m_encrypts[i]
+        m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
+        conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
+        conversions.append(conversion)
+        print "m_encrypt: " + str(m_encrypt)
+        print "m_decrypt: " + str(m_decrypt)
+        print "conversion: " + conversion
+    return " ".join(conversions)
 
 # Function to convert a string into an integer.
 def convertMessageToInt(val, ref_ch_to_int):
     if val is None:
         return None
     pieces = []
+    words = []
     for i in xrange(0, len(val), 1):
-        pieces.append(ref_ch_to_int[val[i]])
-    print "int pieces: " + ", ".join(pieces)
-    full_val = "".join(pieces)
-    print "full_val: " + full_val
-    return int(full_val)
+        if val[i] == ' ':
+            pieces.append(words)
+            words = []
+        else:
+            words.append(ref_ch_to_int[val[i]])
+    pieces.append(words)
+    full_val = []
+    for i in xrange(0, len(pieces), 1):
+        p = pieces[i]
+        print "int pieces: " + ", ".join(p)
+        s_val = "".join(p)
+        i_val = int(s_val)
+        full_val.append(i_val)
+    return full_val
 
 # Function to convert an integer into an string.
 def convertIntToMessage(val, ref_int_to_ch):
@@ -84,12 +106,16 @@ def convertIntToMessage(val, ref_int_to_ch):
     # Handle case if val is odd number of digits. 
     # Q: Is the single letter case at the beginning or at the end?
     pieces = []
-    for i in xrange(0, len(str_val), 1):
-        pieces.append(ref_int_to_ch[str_val[i]])
+    beg = 0
+    if len(str_val) % 2 == 1:
+        beg = 1
+        pieces.append(ref_int_to_ch["0" + str_val[0]])
+    for i in xrange(beg, len(str_val) - 1, 2):
+        pieces.append(ref_int_to_ch[str_val[i:i+2]])
     print "string pieces: " + ", ".join(pieces)
     full_val = "".join(pieces)
     print "full_val: " + full_val
-    return int(full_val)
+    return full_val
 
 # Function to assign codes to each character.
 def assignChCodes():
