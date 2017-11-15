@@ -16,10 +16,8 @@ def calcEulersTotient(p, q):
 # Function to check if number is prime.
 # Note: probably smart to save results 
 def isPrime(val):
-    # can reuse these two at some point
     primes = [1]
     found_values = {1}
-
     iter = 2
     while iter < (val // 2 + 1):
         if iter not in found_values:
@@ -29,13 +27,21 @@ def isPrime(val):
                 found_values.add(total)
                 total += iter
         iter += 1
-
     return val not in found_values
 
 # Function to check if two numbers are coprime/relatively prime.
 def isCoPrime(val_1, val_2):
     dividends, quotients = calcEuclid(val_1, val_2)
     return dividends[len(dividends) - 1] == 1
+
+# Function to find the first factors of a composite of two primes.
+def findFactors(val):
+    # Start from one, do a loop until sqrt(val)
+        # Check if current number % val == 0
+    
+        # if so, take that number, get its multiplier
+    
+    # Return the number and its multiplier.
 
 # Function to execute the euclidean algorithm on two numbers.
 def calcEuclid(val_1, val_2):
@@ -118,8 +124,6 @@ def calcDivision(dividend, divisor):
 #   These problems are of the form: t congr a^b mod n, return t.  
 #   This particular method leverages successive squaring.
 def calcLargeMod(a, b, n):
-    # Retrieve all values of a^(2*x) mod n. While loop.
-    # Do until 2*x is greater than b.
     current = a
     mod_nums = {}
     mod_nums[0] = current
@@ -129,23 +133,13 @@ def calcLargeMod(a, b, n):
         print "pwr: " + str(pwr)
         print "pwr_num: " + str(pwr_num)
         current = current**2 % n
-        #mod_nums.append(current)
         mod_nums[pwr] = current
         print "current: " + str(current)
         pwr += 1
-        pwr_num = 2**pwr
-    
-    print "----------------------------"
-    # Do loop to figure out which are the largest values 
-    #   of 2 that add up to b. 
-    # Do until 0 remainder. Will always get a 0 at some point.
-    # Do from largest to smallest value of 2.
-    # Can store this stuff in a dict. 
-    # For each value that corresponds to power, do a mod n 
-    #   with the multiplication. Keeps everything small.
+        pwr_num = 2**pwr   
     pwr -= 1
     diff = b
-    mult = 1 # not sure if this is correct
+    mult = 1
     while (pwr > -1) and (diff > 0):
         # Check if this power of 2 is less than diff
         pwr_amt = 2**pwr
@@ -159,8 +153,6 @@ def calcLargeMod(a, b, n):
         # Subtract from diff.
         diff -= pwr_amt
         print "diff - pwr_amt: " + str(diff)
-        # Multiply result with the mod number associated 
-        #   that power.
         print "mult: " + str(mult)
         mult *= mod_nums[pwr]
         # Mod the number by n.
