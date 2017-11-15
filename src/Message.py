@@ -72,9 +72,9 @@ def decryptMessage(m_encrypts, N, d, ref_int_to_ch):
         m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
         conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
         conversions.append(conversion)
-        print "m_encrypt: " + str(m_encrypt)
-        print "m_decrypt: " + str(m_decrypt)
-        print "conversion: " + conversion
+        #print "m_encrypt: " + str(m_encrypt)
+        #print "m_decrypt: " + str(m_decrypt)
+        #print "conversion: " + conversion
     return " ".join(conversions)
 
 # Function to decrypt message with signature.
@@ -84,17 +84,19 @@ def decryptMessageSig(m_encrypts, N, d, ref_int_to_ch, sig, e):
     for i in xrange(0, len(m_encrypts), 1):
         m_encrypt = m_encrypts[i]
         m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
-        print "m_encrypt: " + str(m_encrypt)
-        print "m_decrypt: " + str(m_decrypt)
+        #print "m_encrypt: " + str(m_encrypt)
+        #print "m_decrypt: " + str(m_decrypt)
         
         conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
         conversions.append(conversion)
         print "conversion: " + conversion
 
         # do the sign part here.
-        m_orig = Algorithms.calcLargeMod(sig, e, N)
-        print "m_orig: " + str(m_orig)
-        print "-----------------------"
+        
+        
+    m_orig = Algorithms.calcLargeMod(sig, e, N)
+    print "m_orig: " + str(m_orig)
+    print "-----------------------"
     return " ".join(conversions)
 
 # Function to convert a string into an integer.
@@ -103,18 +105,25 @@ def convertMessageToInt(val, ref_ch_to_int):
         return None
     pieces = []
     words = []
+    t = 0
     for i in xrange(0, len(val), 1):
-        if val[i] == ' ':
+        if val[i] == ' ' or t >=3:
             pieces.append(words)
             words = []
+            t = 0
+            if val[i] != ' ':
+                words.append(ref_ch_to_int[val[i]])
         else:
             words.append(ref_ch_to_int[val[i]])
+        t += 1
     pieces.append(words)
     full_val = []
     for i in xrange(0, len(pieces), 1):
         p = pieces[i]
         print "int pieces: " + ", ".join(p)
         s_val = "".join(p)
+        if s_val == '':
+            continue
         i_val = int(s_val)
         full_val.append(i_val)
     return full_val
@@ -141,6 +150,7 @@ def convertIntToMessage(val, ref_int_to_ch):
 
 # Function to assign codes to each character.
 def assignChCodes():
+
     ref_ch_to_int = {}
     
     ref_ch_to_int['a'] = '01'
@@ -197,7 +207,64 @@ def assignChCodes():
     ref_int_to_ch['24'] = 'x'
     ref_int_to_ch['25'] = 'y'
     ref_int_to_ch['26'] = 'z'
+    """
+    ref_ch_to_int = {}
     
+    ref_ch_to_int['a'] = '65'
+    ref_ch_to_int['b'] = '66'
+    ref_ch_to_int['c'] = '67'
+    ref_ch_to_int['d'] = '68'
+    ref_ch_to_int['e'] = '69'
+    ref_ch_to_int['f'] = '70'
+    ref_ch_to_int['g'] = '71'
+    ref_ch_to_int['h'] = '72'
+    ref_ch_to_int['i'] = '73'
+    ref_ch_to_int['j'] = '74'
+    ref_ch_to_int['k'] = '75'
+    ref_ch_to_int['l'] = '76'
+    ref_ch_to_int['m'] = '77'
+    ref_ch_to_int['n'] = '78'
+    ref_ch_to_int['o'] = '79'
+    ref_ch_to_int['p'] = '80'
+    ref_ch_to_int['q'] = '81'
+    ref_ch_to_int['r'] = '82'
+    ref_ch_to_int['s'] = '83'
+    ref_ch_to_int['t'] = '84'
+    ref_ch_to_int['u'] = '85'
+    ref_ch_to_int['v'] = '86'
+    ref_ch_to_int['w'] = '87'
+    ref_ch_to_int['x'] = '88'
+    ref_ch_to_int['y'] = '89'
+    ref_ch_to_int['z'] = '90'
+    
+    ref_int_to_ch = {}
+    ref_int_to_ch['65'] = 'a'
+    ref_int_to_ch['66'] = 'b'
+    ref_int_to_ch['67'] = 'c'
+    ref_int_to_ch['68'] = 'd'
+    ref_int_to_ch['69'] = 'e'
+    ref_int_to_ch['70'] = 'f'
+    ref_int_to_ch['71'] = 'g'
+    ref_int_to_ch['72'] = 'h'
+    ref_int_to_ch['73'] = 'i'
+    ref_int_to_ch['74'] = 'j'
+    ref_int_to_ch['75'] = 'k'
+    ref_int_to_ch['76'] = 'l'
+    ref_int_to_ch['77'] = 'm'
+    ref_int_to_ch['78'] = 'n'
+    ref_int_to_ch['79'] = 'o'
+    ref_int_to_ch['80'] = 'p'
+    ref_int_to_ch['81'] = 'q'
+    ref_int_to_ch['82'] = 'r'
+    ref_int_to_ch['83'] = 's'
+    ref_int_to_ch['84'] = 't'
+    ref_int_to_ch['85'] = 'u'
+    ref_int_to_ch['86'] = 'v'
+    ref_int_to_ch['87'] = 'w'
+    ref_int_to_ch['88'] = 'x'
+    ref_int_to_ch['89'] = 'y'
+    ref_int_to_ch['90'] = 'z'
+    """
     return ref_ch_to_int, ref_int_to_ch
 
 
