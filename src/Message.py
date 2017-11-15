@@ -42,13 +42,12 @@ def handleDecrypt(N, d, ref_int_to_ch, m_encrypts):
     for i in xrange(0, len(m_encrypts), 1):
         m_decrypt = Message.decryptMessage(m_encrypt, N, d, ref_int_to_ch)
         words.append(m_decrypt)
-        print "Encrypted message: " + m_encrypt
-        print "Decrypted message: " + m_decrypt
+        # print "Encrypted message: " + m_encrypt
+        # print "Decrypted message: " + m_decrypt
     end_val = " ".join(words)
     return end_val
 
 # Function to encrypt message.
-# Q: How to break up a big message into multiple messages?
 def encryptMessage(m, N, e, ref_ch_to_int):
     conversion = convertMessageToInt(m, ref_ch_to_int)
     # Compute m_encrypt = conversion^e mod n.
@@ -58,8 +57,7 @@ def encryptMessage(m, N, e, ref_ch_to_int):
         m_encrypts.append(m_encrypt)
         # print "m: " + m
         # print "conversion: " + str(conversion)
-        print "m_encrypt: " + str(m_encrypt)
-        # do the signing part here.
+        # print "m_encrypt: " + str(m_encrypt)
     return m_encrypts
 
 # Function to decrypt message.
@@ -83,13 +81,15 @@ def decryptMessageSig(m_encrypts, N, d, ref_int_to_ch, sig, e):
     for i in xrange(0, len(m_encrypts), 1):
         m_encrypt = m_encrypts[i]
         m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
-        # print "m_encrypt: " + str(m_encrypt)
-        # print "m_decrypt: " + str(m_decrypt)
         conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
         conversions.append(conversion)
+        # print "m_encrypt: " + str(m_encrypt)
+        # print "m_decrypt: " + str(m_decrypt)
         # print "conversion: " + conversion
-    m_orig = Algorithms.calcLargeMod(sig, e, N)
-    # print "m_orig: " + str(m_orig)
+    # This part will calculate the original signature to see 
+    #   if it came from the correct sender.
+    m_orig_hash = Algorithms.calcLargeMod(sig, e, N)
+    # print "m_orig_hash: " + str(m_orig_hash)
     # print "-----------------------"
     return " ".join(conversions)
 
@@ -114,12 +114,12 @@ def convertMessageToInt(val, ref_ch_to_int):
     full_val = []
     for i in xrange(0, len(pieces), 1):
         p = pieces[i]
-        print "int pieces: " + ", ".join(p)
         s_val = "".join(p)
         if s_val == '':
             continue
         i_val = int(s_val)
         full_val.append(i_val)
+        # print "int pieces: " + ", ".join(p)
     return full_val
 
 # Function to convert an integer into an string.
@@ -127,7 +127,6 @@ def convertIntToMessage(val, ref_int_to_ch):
     if val is None:
         return None
     str_val = str(val)
-    print "str_val: " + str_val
     pieces = []
     beg = 0
     if len(str_val) % 2 == 1:
@@ -135,9 +134,10 @@ def convertIntToMessage(val, ref_int_to_ch):
         pieces.append(ref_int_to_ch["0" + str_val[0]])
     for i in xrange(beg, len(str_val) - 1, 2):
         pieces.append(ref_int_to_ch[str_val[i:i+2]])
-    print "string pieces: " + ", ".join(pieces)
     full_val = "".join(pieces)
-    print "full_val: " + full_val
+    # print "str_val: " + str_val
+    # print "string pieces: " + ", ".join(pieces)
+    # print "full_val: " + full_val
     return full_val
 
 # Function to assign codes to each character.

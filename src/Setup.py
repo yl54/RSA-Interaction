@@ -9,11 +9,11 @@ import Algorithms
 def pickInitialPrimes():
     picks = []
     print "Please choose 2 initial prime numbers."
-    while(len(picks) < 2):
+    while len(picks) < 2:
         num = input("Enter an initial prime number: ")
         isPrime = Algorithms.isPrime(num)
         message = ""
-        if(isPrime):
+        if isPrime:
             picks.append(num)
             message = str(num) + " is a prime number."
         else:
@@ -25,11 +25,11 @@ def pickInitialPrimes():
 # Function to ask user for the public exponent.
 def pickPublicExponent(phi):
     # do a while loop.
-    while(True):
+    while True:
         num = input("Enter your public exponent: ")
-        isBtwn = (1 < num) & (num < phi)
+        isBtwn = (1 < num) and (num < phi)
         isCoPrime = Algorithms.isCoPrime(num, phi)
-        if(isBtwn & isCoPrime):
+        if isBtwn and isCoPrime :
             print str(num) + " is a valid public exponent."
             return num
         else:

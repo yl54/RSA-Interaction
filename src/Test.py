@@ -16,7 +16,6 @@ import Setup
 
 # Test the Extended Euclidean Algorithm.
 
-
 # Test the successive squaring mod algorithm.
 """
 a = 7
@@ -29,13 +28,13 @@ result = Algorithms.calcLargeMod(a, b, n)
 print "result: "  + str(result)
 """
 
-# Test the encryption of a message.
+# Test the encryption/decryption of a message.
+
 ref_ch_to_int, ref_int_to_ch = Message.assignChCodes()
 N = 90024247
 e = 2706925
-
-# Note: make a function to figure out what the prime factors are.
-phi = Algorithms.calcEulersTotient(9109, 9883)
+p, q = Algorithms.findFactors(90024247)
+phi = Algorithms.calcEulersTotient(p, q)
 sub_1, mult_sub_1, sub_2, mult_sub_2 = Setup.calcSecretExponent(e, phi)
 d = mult_sub_1
 if(e == sub_2):
@@ -52,20 +51,14 @@ print "decry_result: " + decry_result
 """
 
 encry_result_A = Message.encryptMessage("the ps p", N, e, ref_ch_to_int)
-#encry_result_B = Message.encryptMessage("the ps p", N, e, ref_ch_to_int)
-
 print "encry_result_A: " + str(encry_result_A)
-#print "encry_result_B: " + str(encry_result_B)
-
 sig_A = 84069637
-sig_B = 84066637
-# Test the decryption of a message.
 decry_result_A = Message.decryptMessageSig(encry_result_A, N, d, ref_int_to_ch, sig_A, e)
-#decry_result_B = Message.decryptMessageSig(encry_result_B, N, d, ref_int_to_ch, sig_B, e)
 print "decry_result_A: " + decry_result_A
-#print "decry_result_B: " + decry_result_B
 
-#m_encrypt_A = 84069637
-#m_encrypt_B = 84066637
-#result = Message.decryptMessage(m_encrypt_B, N, d, ref_int_to_ch)
-#print "result: "  + str(result)
+encry_result_B = Message.encryptMessage("the ps p", N, e, ref_ch_to_int)
+print "encry_result_B: " + str(encry_result_B)
+sig_B = 84066637
+decry_result_B = Message.decryptMessageSig(encry_result_B, N, d, ref_int_to_ch, sig_B, e)
+print "decry_result_B: " + decry_result_B
+
