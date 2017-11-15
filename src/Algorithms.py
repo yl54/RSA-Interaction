@@ -3,6 +3,8 @@ This module provides helper functions for mathematical computations.
 
 """
 
+import math
+
 # Function to calculate N given primes p and q.
 def calcModulus(p, q):
     return p * q
@@ -36,6 +38,8 @@ def isCoPrime(val_1, val_2):
 
 # Function to find the first factors of a composite of two primes.
 def findFactors(val):
+    mult = 1
+    max = 
     # Start from one, do a loop until sqrt(val)
         # Check if current number % val == 0
     

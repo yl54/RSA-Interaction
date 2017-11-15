@@ -1,9 +1,9 @@
-import Algorithms
-
 """
 This module provides helper functions for RSA message transferring.
 
 """
+
+import Algorithms
 
 # Function to start an interaction session.
 def interact(p, q, N, phi, e, d):

@@ -1,12 +1,12 @@
-import Algorithms
-import Message
-import Setup
-
 """
 This module does tests on some of the functions to see
   if they are working properly or not. 
 
 """
+
+import Algorithms
+import Message
+import Setup
 
 # Test the prime function.
 

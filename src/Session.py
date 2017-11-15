@@ -1,7 +1,3 @@
-import Algorithms
-import Message
-import Setup
-
 """
 This module implements a complete RSA encryption/decryption 
   interactive session. 
@@ -25,6 +21,9 @@ Reference Guide:
 
 """
 
+import Algorithms
+import Message
+import Setup
 
 """
 Setup: 

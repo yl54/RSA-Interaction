@@ -1,9 +1,9 @@
-import Algorithms
-
 """
 This module provides helper functions for RSA setup.
 
 """
+
+import Algorithms
 
 # Function to ask user for initial primes p and q.
 def pickInitialPrimes():
