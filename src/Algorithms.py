@@ -39,13 +39,15 @@ def isCoPrime(val_1, val_2):
 # Function to find the first factors of a composite of two primes.
 def findFactors(val):
     mult = 1
-    max = 
-    # Start from one, do a loop until sqrt(val)
-        # Check if current number % val == 0
-    
-        # if so, take that number, get its multiplier
-    
-    # Return the number and its multiplier.
+    itr = 2
+    sq = math.sqrt(val)
+    while itr < sq:
+        if val % itr == 0:
+            mult = itr
+            break
+        itr += 1
+    mult_compliment = val // mult
+    return mult, mult_compliment
 
 # Function to execute the euclidean algorithm on two numbers.
 def calcEuclid(val_1, val_2):
