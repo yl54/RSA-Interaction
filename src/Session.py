@@ -69,4 +69,4 @@ Messaging:
 
 """
 
-Message.interact()
+Message.interact(p, q, N, phi, e, d)

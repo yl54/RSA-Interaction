@@ -8,11 +8,9 @@ import Algorithms
 # Function to start an interaction session.
 def interact(p, q, N, phi, e, d):
     encrypted_messages = []
-    ref_ch_to_int, ref_int_to_ch = assignChCodes()
+    ref_ch_to_int, ref_int_to_ch = assignChCodesOrig()
     while True:
-        choice = raw_input("Type 'message' to add a message, \
-                                 'decrypt' to decrypt the next message, or \
-                                 'exit' to stop interacting.")  
+        choice = raw_input("Type 'message' to add a message, \n  'decrypt' to decrypt the next message,\n  or 'exit' to stop interacting: ")  
         if choice == "message" :
             m_encrypts = handleMessage(N, e, ref_ch_to_int)
             encrypted_messages.append(m_encrypts)
@@ -31,19 +29,18 @@ def interact(p, q, N, phi, e, d):
 # Function to handle message choice.
 def handleMessage(N, e, ref_ch_to_int):
     m = raw_input("Enter a message (a-z characters): ")
-    m_encrypts = Message.encryptMessage(m, N, e, ref_ch_to_int)
-    # print "Raw message: " + m
-    # print "Encrypted message: " + str(m_encrypts)
+    m_encrypts = encryptMessage(m, N, e, ref_ch_to_int)
+    print "Raw message: " + m
+    print "Encrypted message: " + str(m_encrypts)
     return m_encrypts
 
 # Function to handle decrypt choice.
 def handleDecrypt(N, d, ref_int_to_ch, m_encrypts):
     words = []
-    for i in xrange(0, len(m_encrypts), 1):
-        m_decrypt = Message.decryptMessage(m_encrypt, N, d, ref_int_to_ch)
-        words.append(m_decrypt)
-        # print "Encrypted message: " + m_encrypt
-        # print "Decrypted message: " + m_decrypt
+    m_decrypt = decryptMessage(m_encrypts, N, d, ref_int_to_ch)
+    words.append(m_decrypt)
+    print "Encrypted message: " + m_encrypt
+    print "Decrypted message: " + m_decrypt
     end_val = " ".join(words)
     return end_val
 
@@ -67,10 +64,10 @@ def decryptMessage(m_encrypts, N, d, ref_int_to_ch):
     for i in xrange(0, len(m_encrypts), 1):
         m_encrypt = m_encrypts[i]
         m_decrypt = Algorithms.calcLargeMod(m_encrypt, d, N)
-        conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
-        conversions.append(conversion)
         # print "m_encrypt: " + str(m_encrypt)
         # print "m_decrypt: " + str(m_decrypt)
+        conversion = convertIntToMessage(m_decrypt, ref_int_to_ch)
+        conversions.append(conversion)
         # print "conversion: " + conversion
     return " ".join(conversions)
 
@@ -141,7 +138,7 @@ def convertIntToMessage(val, ref_int_to_ch):
     return full_val
 
 # Function to assign codes to each character.
-def assignChCodes():
+def assignChCodesOrig():
     ref_ch_to_int = {}
     ref_int_to_ch = {}
 
@@ -199,9 +196,15 @@ def assignChCodes():
     ref_int_to_ch['24'] = 'x'
     ref_int_to_ch['25'] = 'y'
     ref_int_to_ch['26'] = 'z'
+
+    return ref_ch_to_int, ref_int_to_ch
+
+# Function to assign codes to each character.
+#   This is the ascii representation.
+def assignChCodesOAscii():
+    ref_ch_to_int = {}
+    ref_int_to_ch = {}
     
-    """
-    # ascii representation 
     ref_ch_to_int['a'] = '65'
     ref_ch_to_int['b'] = '66'
     ref_ch_to_int['c'] = '67'
@@ -255,10 +258,6 @@ def assignChCodes():
     ref_int_to_ch['88'] = 'x'
     ref_int_to_ch['89'] = 'y'
     ref_int_to_ch['90'] = 'z'
-    """
-    return ref_ch_to_int, ref_int_to_ch
-
-
     
-
+    return ref_ch_to_int, ref_int_to_ch
 
